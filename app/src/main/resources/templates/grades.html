@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layouts/head.html :: head(${title})"></head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+		<!-- Navbar -->
+		<nav th:replace="layouts/nav.html"></nav>
+		<!-- Main Sidebar Container -->
+		<aside th:replace="layouts/aside.html"></aside>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<div th:replace="layouts/content-header.html :: header('Quản lý khối')"></div>
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title">
+								<i class="fas fa-chart-pie mr-1"></i>
+								Danh sách khối
+							</h3>
+						</div>
+						<div class="card-body">
+							<button class="btn btn-success" data-toggle="modal" data-target="#add-modal">Thêm khối
+							</button>
+							<!-- Modal -->
+							<div class="modal fade" id="add-modal" data-backdrop="static" data-keyboard="false"
+								tabindex="-1" aria-hidden="true">
+								<form th:action="@{/grades}" th:method="post" th:object="${gradeModelAttribute}">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title">Thêm khối</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<label for="" class="form-label">Tên khối</label>
+												<input type="text" th:field="*{name}" class="form-control" required>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Hủy</button>
+												<button type="submit" class="btn btn-primary">Thêm</button>
+											</div>
+										</div>
+
+									</div>
+								</form>
+							</div>
+							<!--Table-->
+							<div class="table-responsive p-5">
+								<table class="table ">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Tên khối</th>
+											<th class="col-3"></th>
+										</tr>
+										<tr th:each="gradeItem,gradeState : ${grades}">
+											<th th:text="${gradeState.count}"></th>
+											<th th:text="${gradeItem.name}"></th>
+											<th>
+												<a href="" class="btn btn-info" data-toggle="modal"
+												th:attr="data-target='#update-modal-'+${gradeItem.id}">Cập nhật</a>
+												<!-- Modal -->
+												<div class="modal fade" th:id="'update-modal-'+${gradeItem.id}"
+													data-backdrop="static" data-keyboard="false" tabindex="-1"
+													aria-hidden="true">
+													<form th:action="@{'/grades/' +${gradeItem.id}}" th:method="put" th:object="${gradeModelAttribute}">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h5 class="modal-title">Thông tin khối</h5>
+																	<button type="button" class="close"
+																		data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
+																	</button>
+																</div>
+																<div class="modal-body">
+																	<label for="" class="form-label">Tên khối</label>
+																	<input type="text"  th:value="${gradeItem.name}" th:name="name" class="form-control" required>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary"
+																		data-dismiss="modal">Hủy</button>
+																	<button type="submit"
+																		class="btn btn-info">Cập nhật</button>
+																</div>
+															</div>
+
+														</div>
+													</form>
+												</div>
+												<a href="" class="btn btn-danger" data-toggle="modal"
+													th:attr="data-target='#delete-modal-'+${gradeItem.id}">Xóa</a>
+												<!-- Modal -->
+												<div class="modal fade" th:id="'delete-modal-'+${gradeItem.id}"
+													data-backdrop="static" data-keyboard="false" tabindex="-1"
+													aria-hidden="true">
+													<form th:action="@{'/grades/' +${gradeItem.id}}" th:method="delete">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h5 class="modal-title">Xác nhận xóa khối</h5>
+																	<button type="button" class="close"
+																		data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
+																	</button>
+																</div>
+																<div class="modal-body">
+																	<p
+																		th:text="'Bạn có chắc chắc muốn xóa khối ' + ${gradeItem.name}">
+																	</p>
+
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary"
+																		data-dismiss="modal">Hủy</button>
+																	<button type="submit"
+																		class="btn btn-danger">Xóa</button>
+																</div>
+															</div>
+
+														</div>
+													</form>
+												</div>
+											</th>
+										</tr>
+
+									</thead>
+								</table>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	<footer th:replace="layouts/footer.html"></footer>
+	<script th:replace="layouts/script.html"></script>
+</body>
+
+</html>
