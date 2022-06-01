@@ -2,6 +2,7 @@ package student.management.spring.app.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,7 +38,7 @@ public class Clazz {
 	@Column(columnDefinition = "NVARCHAR(50)")
 	private String name;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
 	@JoinColumn(name = "grade_id")
 	private Grade grade;
 

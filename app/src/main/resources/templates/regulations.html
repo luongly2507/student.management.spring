@@ -55,7 +55,7 @@
                           
                                       </li>
                                   </ol>
-                                  <button class="mt-3 btn btn-outline-primary float-end" type="submit">Lưu thay đổi</button>
+                                  <button class="mt-3 btn btn-outline-primary float-end" type="submit" sec:authorize="hasRole('ROLE_PRINCIPAL')">Lưu thay đổi</button>
                                   <div class="clearfix"></div>
                                 </form>
                               

@@ -28,8 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Student implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Student {
 
 	@Id
 	@Column(unique=true, nullable=false)

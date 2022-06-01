@@ -11,7 +11,7 @@
 		<aside th:replace="layouts/aside.html"></aside>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<div th:replace="layouts/content-header.html :: header('Quản lý lớp')"></div>
+			<div th:replace="layouts/content-header.html :: header('Quản lý học sinh')"></div>
 			<!-- Main content -->
 			<section class="content">
 				<div class="container-fluid">
@@ -23,12 +23,12 @@
 							</h3>
 						</div>
 						<div class="card-body">
-							<button class="btn btn-success" data-toggle="modal" data-target="#add-modal" sec:authorize="hasRole('ROLE_PRINCIPAL') OR hasRole('ROLE_HR')">Thêm lớp
+							<button class="btn btn-success" data-toggle="modal" data-target="#add-modal">Thêm học sinh
 							</button>
 							<!-- Modal -->
 							<div class="modal fade" id="add-modal" data-backdrop="static" data-keyboard="false"
 								tabindex="-1" aria-hidden="true">
-								<form th:action="@{/classes}" th:method="post" th:object="${classModelAttribute}">
+								<form th:action="@{/students}" th:method="post" th:object="${studentModelAttribute}">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -39,14 +39,22 @@
 												</button>
 											</div>
 											<div class="modal-body">
-                                                <label for="" class="form-label">Khối</label>
-                                                <select class="form-control" th:field="*{grade.id}">
-                                                    <option th:each="gradeItem : ${grades}"
-                                                    th:value="${gradeItem.id}"
-                                                    th:utext="${gradeItem.name}"/>
+                                                <label for="" class="form-label">Lớp</label>
+                                                <select class="form-control">
+                                                    <option th:each="classItem : ${classes}"
+                                                    th:value="${classItem.id}"
+                                                    th:utext="${classItem.name}"/>
                                                     </select>
-												<label for="" class="form-label">Tên lớp</label>
+												<label for="" class="form-label">Tên học sinh</label>
 												<input type="text" th:field="*{name}" class="form-control" required>
+                                                <label for="" class="form-label">Địa chỉ</label>
+												<input type="text" th:field="*{address}" class="form-control" required>
+                                                <label for="" class="form-label">Email</label>
+												<input type="email" th:field="*{email}" class="form-control" required>
+                                                <label for="" class="form-label">Số điện thoại</label>
+												<input type="tel" th:field="*{phone}" class="form-control" required>
+                                                <label for="" class="form-label">Ngày sinh</label>
+												<input type="text" th:field="*{birthDate}" class="form-control" required>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary"
@@ -67,17 +75,17 @@
 											<th>Tên lớp</th>
 											<th class="col-3"></th>
 										</tr>
-										<tr th:each="classItem,classState : ${classes}">
-											<th th:text="${classState.count}"></th>
-											<th th:text="${classItem.grade.name}+${classItem.name}"></th>
+										<tr th:each="studentItem,studentState : ${students}">
+											<th th:text="${studentState.count}"></th>
+											<th th:text="${studentItem.grade.name}+${studentItem.name}"></th>
 											<th>
 												<a href="" class="btn btn-info" data-toggle="modal"
-												th:attr="data-target='#update-modal-'+${classItem.id}" sec:authorize="hasRole('ROLE_PRINCIPAL') OR hasRole('ROLE_HR')">Cập nhật</a>
+												th:attr="data-target='#update-modal-'+${studentItem.id}">Cập nhật</a>
 												<!-- Modal -->
-												<div class="modal fade" th:id="'update-modal-'+${classItem.id}"
+												<div class="modal fade" th:id="'update-modal-'+${studentItem.id}"
 													data-backdrop="static" data-keyboard="false" tabindex="-1"
 													aria-hidden="true">
-													<form th:action="@{'/classes/' +${classItem.id}}" th:method="put" th:object="${classModelAttribute}">
+													<form th:action="@{'/students/' +${studentItem.id}}" th:method="put" th:object="${studentModelAttribute}">
 														<div class="modal-dialog">
 															<div class="modal-content">
 																<div class="modal-header">
@@ -89,14 +97,14 @@
 																</div>
 																<div class="modal-body">
                                                                     <label for="" class="form-label">Tên khối</label>
-                                                                    <select class="form-control" th:name="grade.id">
-                                                                        <option th:each="gradeItem : ${grades}"
-                                                                        th:value="${gradeItem.id}"
-                                                                        th:utext="${gradeItem.name}"
-                                                                        th:selected="${gradeItem.name} == ${classItem.grade.name}"/>
+                                                                    <select class="form-control" th:name="class.id">
+                                                                        <option th:each="classItem : ${classes}"
+                                                                        th:value="${classItem.id}"
+                                                                        th:utext="${classItem.name}"
+                                                                        th:selected="${classItem.name} == ${studentItem.class.name}"/>
                                                                         </select>
 																	<label for="" class="form-label">Tên lớp</label>
-																	<input type="text"  th:value="${classItem.name}" th:name="name" class="form-control" required>
+																	<input type="text"  th:value="${studentItem.name}" th:name="name" class="form-control" required>
 																</div>
 																<div class="modal-footer">
 																	<button type="button" class="btn btn-secondary"
@@ -110,12 +118,12 @@
 													</form>
 												</div>
 												<a href="" class="btn btn-danger" data-toggle="modal"
-													th:attr="data-target='#delete-modal-'+${classItem.id}" sec:authorize="hasRole('ROLE_PRINCIPAL') OR hasRole('ROLE_HR')">Xóa</a>
+													th:attr="data-target='#delete-modal-'+${studentItem.id}">Xóa</a>
 												<!-- Modal -->
-												<div class="modal fade" th:id="'delete-modal-'+${classItem.id}"
+												<div class="modal fade" th:id="'delete-modal-'+${studentItem.id}"
 													data-backdrop="static" data-keyboard="false" tabindex="-1"
 													aria-hidden="true">
-													<form th:action="@{'/classes/' +${classItem.id}}" th:method="delete">
+													<form th:action="@{'/classes/' +${studentItem.id}}" th:method="delete">
 														<div class="modal-dialog">
 															<div class="modal-content">
 																<div class="modal-header">
@@ -127,7 +135,7 @@
 																</div>
 																<div class="modal-body">
 																	<p
-																		th:text="'Bạn có chắc chắc muốn xóa lớp ' + ${classItem.name}">
+																		th:text="'Bạn có chắc chắc muốn xóa lớp ' + ${studentItem.name}">
 																	</p>
 
 																</div>

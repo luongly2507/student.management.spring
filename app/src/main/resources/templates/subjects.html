@@ -23,7 +23,7 @@
 							</h3>
 						</div>
 						<div class="card-body">
-							<button class="btn btn-success" data-toggle="modal" data-target="#add-modal">Thêm môn học
+							<button class="btn btn-success" data-toggle="modal" data-target="#add-modal" sec:authorize="hasRole('ROLE_PRINCIPAL') OR hasRole('ROLE_HR')">Thêm môn học
 							</button>
 							<!-- Modal -->
 							<div class="modal fade" id="add-modal" data-backdrop="static" data-keyboard="false"
@@ -72,7 +72,7 @@
 											<th th:text="${subjectItem.name}+' '+${subjectItem.grade.name}"></th>
 											<th>
 												<a href="" class="btn btn-info" data-toggle="modal"
-												th:attr="data-target='#update-modal-'+${subjectItem.id}">Cập nhật</a>
+												th:attr="data-target='#update-modal-'+${subjectItem.id}" sec:authorize="hasRole('ROLE_PRINCIPAL') OR hasRole('ROLE_HR')">Cập nhật</a>
 												<!-- Modal -->
 												<div class="modal fade" th:id="'update-modal-'+${subjectItem.id}"
 													data-backdrop="static" data-keyboard="false" tabindex="-1"
@@ -110,7 +110,7 @@
 													</form>
 												</div>
 												<a href="" class="btn btn-danger" data-toggle="modal"
-													th:attr="data-target='#delete-modal-'+${subjectItem.id}">Xóa</a>
+													th:attr="data-target='#delete-modal-'+${subjectItem.id}" sec:authorize="hasRole('ROLE_PRINCIPAL') OR hasRole('ROLE_HR')">Xóa</a>
 												<!-- Modal -->
 												<div class="modal fade" th:id="'delete-modal-'+${subjectItem.id}"
 													data-backdrop="static" data-keyboard="false" tabindex="-1"

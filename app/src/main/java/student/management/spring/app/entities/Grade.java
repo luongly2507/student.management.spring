@@ -32,7 +32,7 @@ public class Grade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(columnDefinition = "NVARCHAR(50)")
+	@Column(columnDefinition = "NVARCHAR(50)",unique=true, nullable=false)
 	private String name;
 
 	//bi-directional many-to-one association to Clazz

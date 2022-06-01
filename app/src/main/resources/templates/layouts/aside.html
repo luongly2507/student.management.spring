@@ -12,7 +12,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="info">
-                <a href="#" class="d-block">Admin Name</a>
+                <a href="#" class="d-block" th:text="'Xin chào ' + ${#authentication.getPrincipal().fullName}" >Admin Name</a>
             </div>
         </div>
         <!-- Sidebar Menu -->
@@ -20,12 +20,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-                <li class="nav-item">
-                    <a th:href="@{/statisticals}" class="nav-link">
-                        <i class="nav-icon fas fa-chart-line text-primary"></i>
-                        <p class="text">Thống kê</p>
-                    </a>
-                </li>
+             
                 <li class="nav-item">
                     <a th:href="@{/semesters}" class="nav-link">
                         <i class="nav-icon fas fa-bars text-secondary"></i>

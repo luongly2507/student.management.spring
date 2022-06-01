@@ -23,7 +23,7 @@
 							</h3>
 						</div>
 						<div class="card-body">
-							<button class="btn btn-success" data-toggle="modal" data-target="#add-modal">Thêm khối
+							<button class="btn btn-success" data-toggle="modal" data-target="#add-modal" sec:authorize="hasRole('ROLE_PRINCIPAL')">Thêm khối
 							</button>
 							<!-- Modal -->
 							<div class="modal fade" id="add-modal" data-backdrop="static" data-keyboard="false"
@@ -66,7 +66,7 @@
 											<th th:text="${gradeItem.name}"></th>
 											<th>
 												<a href="" class="btn btn-info" data-toggle="modal"
-												th:attr="data-target='#update-modal-'+${gradeItem.id}">Cập nhật</a>
+												th:attr="data-target='#update-modal-'+${gradeItem.id}" sec:authorize="hasRole('ROLE_PRINCIPAL')">Cập nhật</a>
 												<!-- Modal -->
 												<div class="modal fade" th:id="'update-modal-'+${gradeItem.id}"
 													data-backdrop="static" data-keyboard="false" tabindex="-1"
@@ -97,7 +97,7 @@
 													</form>
 												</div>
 												<a href="" class="btn btn-danger" data-toggle="modal"
-													th:attr="data-target='#delete-modal-'+${gradeItem.id}">Xóa</a>
+													th:attr="data-target='#delete-modal-'+${gradeItem.id}" sec:authorize="hasRole('ROLE_PRINCIPAL')">Xóa</a>
 												<!-- Modal -->
 												<div class="modal fade" th:id="'delete-modal-'+${gradeItem.id}"
 													data-backdrop="static" data-keyboard="false" tabindex="-1"
